@@ -24,3 +24,5 @@ config/
 *.mk
 MakeFile
 relx.config
+*.d
+ebin/*.beam
