@@ -6,13 +6,18 @@
 
 start(_Type, _Args) ->
 	Dispatch = cowboy_router:compile([
-        {'_', [{"/", hello_handler, []}]}
+        {'_', [
+			{"/", hello_handler, []},
+			{"/basic", basic_auth_handler, []}
+		]}
     ]),
-    {ok, _} = cowboy:start_clear(http,
+	
+    {ok, _} = cowboy:start_clear(
+		http,
         [{port, 8080}],
         #{env => #{dispatch => Dispatch}}
     ),
 	hellocowboy_sup:start_link().
 
 stop(_State) ->
-	ok.
+	ok = cowboy:stop_listener(http).
